@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', function() {
+	return view('blog_theme.pages.home');
+});
