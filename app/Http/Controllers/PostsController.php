@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\posts;
+use App\Post;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -14,7 +14,12 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        $posts = POST::paginate(3);
+        return view('blog_theme.pages.home', compact('posts'));
+    }
+
+    public function showPost(Post $post) {
+        return view('blog_theme.pages.Post', compact('post'));
     }
 
     /**
@@ -24,7 +29,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog_theme.pages.AddPost');
     }
 
     /**
@@ -35,7 +40,15 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(), [
+            'title' => 'required',
+            'post' => 'required',
+        ]);
+        Post::create([
+            'title' => request('title'),
+            'post' => request('post')
+        ]);
+        return redirect('/');
     }
 
     /**
