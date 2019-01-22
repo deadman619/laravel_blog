@@ -57,7 +57,7 @@ class PostsController extends Controller
      * @param  \App\posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function show(posts $posts)
+    public function show(Post $post)
     {
         //
     }
@@ -68,9 +68,9 @@ class PostsController extends Controller
      * @param  \App\posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function edit(posts $posts)
+    public function edit(Post $post)
     {
-        //
+        return view('blog_theme.pages.Edit', compact('post'));
     }
 
     /**
@@ -80,7 +80,7 @@ class PostsController extends Controller
      * @param  \App\posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, posts $posts)
+    public function update(Request $request, Post $post)
     {
         //
     }
@@ -91,7 +91,7 @@ class PostsController extends Controller
      * @param  \App\posts  $posts
      * @return \Illuminate\Http\Response
      */
-    public function destroy(posts $posts)
+    public function destroy(Post $post)
     {
         //
     }
