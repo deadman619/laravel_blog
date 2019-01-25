@@ -11,8 +11,11 @@
 |
 */
 
+// composer update to set up vendor folder
 Route::get('/', 'PostsController@index');
 Route::get('/add-post', 'PostsController@create');
 Route::post('/store', 'PostsController@store');
 Route::get('/post/{post}', 'PostsController@showPost');
 Route::get('/edit/{post}', 'PostsController@edit');
+Route::post('/update/{post}', 'PostsController@update');
+Route::get('/delete/{post}', 'PostsController@destroy');

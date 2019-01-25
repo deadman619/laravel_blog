@@ -42,7 +42,7 @@ class PostsController extends Controller
     {
         $this->validate(request(), [
             'title' => 'required',
-            'post' => 'required',
+            'post' => 'required'
         ]);
         Post::create([
             'title' => request('title'),
@@ -82,7 +82,15 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $this->validate(request(), [
+            'title' => 'required',
+            'post' => 'required'
+        ]);
+        $post->update([
+            'title' => request('title'),
+            'post' => request('post')
+        ]);
+        return view("blog_theme.pages.Post", compact('post'));
     }
 
     /**
@@ -93,6 +101,7 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->destroy($post->id);
+        return redirect('/');
     }
 }
