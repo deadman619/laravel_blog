@@ -1,3 +1,9 @@
+<?php use App\Category;
+use App\Post;
+$categories = Category::all();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Create controller and database using php artisan make:model -mcr posts -->
@@ -17,19 +23,19 @@
   </head>
 
   <body>
-
     <!-- Navbar -->
 	<div>
 		@include('blog_theme.partials.navbar')
 	</div>
 
     <!-- Page Content -->
-    <div class="container">
-      <div class="row">
+    <div class="container" style='min-height: 750px;'>
+      <div class="row mt-5">
       	@yield('content')
 		    @include('blog_theme.partials.sidebar')
 		  </div>
    </div>
+ </div>
    <!-- Footer -->
    <div>
 		@include('blog_theme.partials.footer')

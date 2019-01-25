@@ -8,7 +8,14 @@
     <input class="form-control " name='title' placeholder='Input Title' value='{{$post->title}}'></input>
     </div>
     <div class="form-group">
-     <textarea class="form-control" name='post' rows="24">{{$post->post}}</textarea>
+    <select class="form-control " name='category'>
+    	@foreach($categories as $category)
+    	<option value={{$category->id}}>{{$category->category}}</option>
+    	@endforeach
+    </select>
+    </div>
+    <div class="form-group">
+     <textarea class="form-control" name='post' rows="20">{{$post->post}}</textarea>
     </div>
     <button type="submit" class="btn btn-primary">Confirm</button>
 </form>

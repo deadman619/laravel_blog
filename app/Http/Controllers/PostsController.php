@@ -1,8 +1,12 @@
 <?php
 
+//php artisan make:auth
+//php artisan make:model Category -mcr
+
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Category;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -12,14 +16,23 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct() {
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+    }
     public function index()
     {
-        $posts = POST::paginate(3);
+        $posts = Post::paginate(3);
         return view('blog_theme.pages.home', compact('posts'));
     }
 
     public function showPost(Post $post) {
         return view('blog_theme.pages.Post', compact('post'));
+    }
+
+    public function filterPosts(Category $category) {
+        //$posts = Category::find($category->id)->posts; Pagination doesn't work
+        $posts = Post::where('categoryId', '=', $category->id)->paginate(3);
+        return view('blog_theme.pages.home', compact('posts'));
     }
 
     /**
@@ -28,8 +41,9 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('blog_theme.pages.AddPost');
+    {   
+        $categories = Category::all();
+        return view('blog_theme.pages.AddPost', compact('categories'));
     }
 
     /**
@@ -42,11 +56,13 @@ class PostsController extends Controller
     {
         $this->validate(request(), [
             'title' => 'required',
-            'post' => 'required'
+            'post' => 'required',
+            'category' => 'required'
         ]);
         Post::create([
             'title' => request('title'),
-            'post' => request('post')
+            'post' => request('post'),
+            'categoryId' => request('category')
         ]);
         return redirect('/');
     }
@@ -70,7 +86,8 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('blog_theme.pages.Edit', compact('post'));
+        $categories = Category::all();
+        return view('blog_theme.pages.Edit', compact('post', 'categories'));
     }
 
     /**
@@ -84,11 +101,13 @@ class PostsController extends Controller
     {
         $this->validate(request(), [
             'title' => 'required',
-            'post' => 'required'
+            'post' => 'required',
+            'category' => 'required'
         ]);
         $post->update([
             'title' => request('title'),
-            'post' => request('post')
+            'post' => request('post'),
+            'categoryId' => request('category')
         ]);
         return view("blog_theme.pages.Post", compact('post'));
     }
