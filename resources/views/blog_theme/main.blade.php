@@ -1,9 +1,3 @@
-<?php use App\Category;
-use App\Post;
-$categories = Category::all();
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <!-- Create controller and database using php artisan make:model -mcr posts -->
@@ -15,7 +9,7 @@ $categories = Category::all();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Laravel</title>
+    <title>Your blog &copy;</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -23,27 +17,29 @@ $categories = Category::all();
   </head>
 
   <body>
-    <!-- Navbar -->
-	<div>
-		@include('blog_theme.partials.navbar')
-	</div>
 
+    <!-- Navbar -->
+		@include('blog_theme.partials.navbar')
+    @include('blog_theme.partials.information')
     <!-- Page Content -->
     <div class="container" style='min-height: 750px;'>
       <div class="row mt-5">
+        
       	@yield('content')
 		    @include('blog_theme.partials.sidebar')
 		  </div>
    </div>
- </div>
+
    <!-- Footer -->
-   <div>
 		@include('blog_theme.partials.footer')
-  </div>
 
     <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{asset('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+    <script>
+        CKEDITOR.replace( 'article-ckeditor' );
+    </script>
 
   </body>
 </html>

@@ -15,7 +15,7 @@
     </select>
     </div>
     <div class="form-group">
-     <textarea class="form-control" name='post' rows="24"></textarea>
+     <textarea id='article-ckeditor' class="form-control" name='post' rows="24"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

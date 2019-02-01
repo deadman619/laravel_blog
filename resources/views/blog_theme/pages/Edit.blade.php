@@ -15,7 +15,7 @@
     </select>
     </div>
     <div class="form-group">
-     <textarea class="form-control" name='post' rows="20">{{$post->post}}</textarea>
+        <textarea id='article-ckeditor' class="form-control" name='post' rows="20">{{$post->post}}</textarea>
     </div>
     <button type="submit" class="btn btn-primary">Confirm</button>
 </form>

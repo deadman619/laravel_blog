@@ -13,8 +13,20 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/add-post">Add Post</a>
-            </li>
+                <a class="nav-link" href="/posts">Posts</a>
+              </li>
+            @if(!Auth::guest())
+              <li class="nav-item">
+                <a class="nav-link" href="/add-post">Add Post</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+            @else 
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+            @endif
           </ul>
         </div>
       </div>

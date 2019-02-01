@@ -1,4 +1,10 @@
+<!-- Generate categories -->
 
+<?php use App\Category;
+use App\Post;
+$categories = Category::all();
+
+?>
 <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
 
@@ -39,5 +45,5 @@
               You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
             </div>
           </div>
-
         </div>
+      </div>

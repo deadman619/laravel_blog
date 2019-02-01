@@ -13,7 +13,8 @@
 
 //php artisan make:model Category -mcr
 // composer update to set up vendor folder
-Route::get('/home', 'PostsController@index');
+Route::get('/home', 'HomeController@index');
+Route::get('/posts', 'PostsController@index');
 Route::get('/add-post', 'PostsController@create');
 Route::post('/store', 'PostsController@store');
 Route::get('/post/{post}', 'PostsController@showPost');
@@ -24,4 +25,5 @@ Route::get('/category/{category}', 'PostsController@filterPosts');
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
+Route::get('logout', 'Auth\LoginController@logout');

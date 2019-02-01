@@ -17,7 +17,7 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct() {
-        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
+        $this->middleware('auth', ['except' => ['index', 'showPost', 'filterPosts']]);
     }
     public function index()
     {
@@ -31,7 +31,7 @@ class PostsController extends Controller
 
     public function filterPosts(Category $category) {
         //$posts = Category::find($category->id)->posts; Pagination doesn't work
-        $posts = Post::where('categoryId', '=', $category->id)->paginate(3);
+        $posts = Post::where('category_id', '=', $category->id)->paginate(3);
         return view('blog_theme.pages.home', compact('posts'));
     }
 
@@ -62,9 +62,10 @@ class PostsController extends Controller
         Post::create([
             'title' => request('title'),
             'post' => request('post'),
-            'categoryId' => request('category')
+            'category_id' => request('category'),
+            'user_id' => auth()->user()->id
         ]);
-        return redirect('/');
+        return redirect('/posts')->with('success', 'Post Created');
     }
 
     /**
@@ -87,6 +88,9 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        if(auth()->user()->id !== $post->user_id) {
+            return redirect('posts')->with('error', 'Only the author can edit his own articles');
+        }
         return view('blog_theme.pages.Edit', compact('post', 'categories'));
     }
 
@@ -107,7 +111,7 @@ class PostsController extends Controller
         $post->update([
             'title' => request('title'),
             'post' => request('post'),
-            'categoryId' => request('category')
+            'category_id' => request('category')
         ]);
         return view("blog_theme.pages.Post", compact('post'));
     }
@@ -120,6 +124,9 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(auth()->user()->id !== $post->user_id) {
+            return redirect('posts')->with('error', 'Only the author can delete his own articles');
+        }
         $post->destroy($post->id);
         return redirect('/');
     }
