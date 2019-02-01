@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Comment;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -22,17 +23,19 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::paginate(3);
-        return view('blog_theme.pages.home', compact('posts'));
+        return view('blog_theme.pages.Posts', compact('posts'));
     }
 
     public function showPost(Post $post) {
-        return view('blog_theme.pages.Post', compact('post'));
+
+        $comments = Comment::where('post_id', '=', $post->id)->get();
+        return view('blog_theme.pages.Post', compact(['post', 'comments']));
     }
 
     public function filterPosts(Category $category) {
         //$posts = Category::find($category->id)->posts; Pagination doesn't work
         $posts = Post::where('category_id', '=', $category->id)->paginate(3);
-        return view('blog_theme.pages.home', compact('posts'));
+        return view('blog_theme.pages.Posts', compact('posts'));
     }
 
     /**

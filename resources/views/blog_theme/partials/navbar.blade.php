@@ -8,14 +8,14 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/home">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/posts">Posts</a>
               </li>
             @if(!Auth::guest())
+              <li class="nav-item">
+                <a class="nav-link" href="/home">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="/add-post">Add Post</a>
               </li>

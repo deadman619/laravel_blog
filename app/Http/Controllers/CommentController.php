@@ -19,16 +19,16 @@ class CommentController extends Controller
         return compact('comments');
     }
 
-    public function store(Request $request){
-    	$this->validate($request, [
-            'comment' => 'required',
+    public function store(Request $request, $post){
+        $this->validate(request(), [
+            'comment' => 'required'
         ]);
-        $comment = new Comment;
-        $comment->comment = $request->input('comment');
-        $comment->postId = $request->id;
-        $comment->userId = auth()->user()->id;
-        $comment->save();
-        return redirect('posts')->with('success', 'Comment Created');
+        Comment::create([
+            'comment' => request('comment'),
+            'post_id' => $post,
+            'user_id' => auth()->user()->id
+        ]);
+        return redirect(URL::previous())->with('success', 'Comment Posted');
     }
 
     public function vote(Request $request){

@@ -22,6 +22,8 @@ Route::get('/edit/{post}', 'PostsController@edit');
 Route::post('/update/{post}', 'PostsController@update');
 Route::get('/delete/{post}', 'PostsController@destroy');
 Route::get('/category/{category}', 'PostsController@filterPosts');
+Route::post('/comment/{post}', 'CommentController@store');
+
 
 Auth::routes();
 
