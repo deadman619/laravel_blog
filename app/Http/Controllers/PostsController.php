@@ -42,7 +42,8 @@ class PostsController extends Controller
         $this->validate(request(), [
             'query' => 'required',
         ]);
-        $posts = Post::where('title', 'LIKE', '%'. request('query') . '%')->paginate(3);
+        $posts = Post::where('title', 'LIKE', '%'. request('query') . '%')->
+        orWhere('post', 'LIKE', '%'. request('query') . '%')->paginate(3);
         $posts->withPath('/search?query=' . request('query'));
         
         //return $posts;
