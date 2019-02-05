@@ -18,7 +18,7 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct() {
-        $this->middleware('auth', ['except' => ['index', 'showPost', 'filterPosts']]);
+        $this->middleware('auth', ['except' => ['index', 'showPost', 'filterPosts', 'search']]);
     }
     public function index()
     {
@@ -35,6 +35,17 @@ class PostsController extends Controller
     public function filterPosts(Category $category) {
         //$posts = Category::find($category->id)->posts; Pagination doesn't work
         $posts = Post::where('category_id', '=', $category->id)->paginate(3);
+        return view('blog_theme.pages.Posts', compact('posts'));
+    }
+
+    public function search(Request $request) {
+        $this->validate(request(), [
+            'query' => 'required',
+        ]);
+        $posts = Post::where('title', 'LIKE', '%'. request('query') . '%')->paginate(3);
+        $posts->withPath('/search?query=' . request('query'));
+        
+        //return $posts;
         return view('blog_theme.pages.Posts', compact('posts'));
     }
 
