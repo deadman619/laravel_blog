@@ -29,7 +29,7 @@ class PostsController extends Controller
     public function showPost(Post $post) {
 
         $comments = Comment::where('post_id', '=', $post->id)->get();
-        return view('blog_theme.pages.Post', compact(['post', 'comments']));
+        return view('blog_theme.pages.Post', compact('post', 'comments'));
     }
 
     public function filterPosts(Category $category) {
@@ -127,7 +127,8 @@ class PostsController extends Controller
             'post' => request('post'),
             'category_id' => request('category')
         ]);
-        return view("blog_theme.pages.Post", compact('post'));
+        $comments = Comment::where('post_id', '=', $post->id)->get();
+        return view("blog_theme.pages.Post", compact('post', 'comments'));
     }
 
     /**
